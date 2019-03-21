@@ -8,13 +8,17 @@ import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { PositionComponent } from './position/position.component';
 import { HomeComponent } from './home/home.component';
+import { ReactiveDynamicComponent } from './reactive-dynamic/reactive-dynamic.component';
+import { ReactiveTableComponent } from './reactive-table/reactive-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeComponent,
     PositionComponent,
-    HomeComponent
+    HomeComponent,
+    ReactiveDynamicComponent,
+    ReactiveTableComponent
   ],
   imports: [
     BrowserModule,

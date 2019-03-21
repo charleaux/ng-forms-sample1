@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col">
       <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-        <div id="user-data">
+        <div id="user-data" ngModelGroup="userData" #userData="ngModelGroup">
           <div class="form-group">
             <label for="username">Username</label>
             <input
@@ -16,9 +16,18 @@
               class="form-control"
               ngModel
               name="username"
+              required
+              #username="ngModel"
             />
+            <span class="help-block" *ngIf="!username.valid && username.touched"
+              >Please enter a valid username!</span
+            >
           </div>
-          <button class="btn btn-outline-primary" type="button">
+          <button
+            class="btn btn-outline-primary"
+            type="button"
+            (click)="suggestUserNameViaPatch()"
+          >
             Suggest a Username
           </button>
           <div class="form-group">
@@ -29,18 +38,69 @@
               class="form-control"
               ngModel
               name="email"
+              required
+              email
+              #email="ngModel"
             />
+            <span *ngIf="email.invalid && email.touched" class="help-block"
+              >Please enter a valid email!</span
+            >
           </div>
         </div>
+        <span *ngIf="!userData.valid && userData.touched"
+          >User Data is invalid!</span
+        >
         <div class="form-group">
           <label for="secret">Secret Questions</label>
-          <select id="secret" class="form-control" ngModel name="secret">
+          <select
+            id="secret"
+            class="form-control"
+            [ngModel]="defaultQuestion"
+            name="secret"
+            required
+          >
             <option value="pet">Your first Pet?</option>
             <option value="teacher">Your first teacher?</option>
           </select>
+          <button
+            (click)="toggleDefaultQuestion()"
+            class="btn btn-outline-primary"
+            type="button"
+            style="margin-top: 10px;"
+          >
+            Toggle Default Question
+          </button>
         </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="form-group">
+          <textarea
+            name="questionAnswer"
+            rows="3"
+            [(ngModel)]="answer"
+            class="form-control"
+          ></textarea>
+        </div>
+        <p>Your reply: {{ answer }}</p>
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input type="radio" name="gender" ngModel [value]="gender" />
+            {{ gender }}
+          </label>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!form.valid">
+          Submit
+        </button>
       </form>
+    </div>
+  </div>
+  <hr />
+  <div class="row" *ngIf="submitted === true">
+    <div class="col">
+      <h3>Your Data</h3>
+      <p>Username: {{ user.username }}</p>
+      <p>Mail: {{ user.email }}</p>
+      <p>Secret Question: {{ user.secret }}</p>
+      <p>Answer: {{ user.questionAnswer }}</p>
+      <p>Gender: {{ user.gender }}</p>
     </div>
   </div>
 </div>

@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            formControlName="name"
+          />
+        </div>
+        <div formArrayName="hobbies">
+          <div
+            class="form-group"
+            *ngFor="let hobby of getHobbies(); let i = index"
+          >
+            <input type="text" class="form-control" [formControlName]="i" />
+          </div>
+          <button
+            class="btn btn-outline-primary"
+            (click)="addHobby()"
+            type="button"
+          >
+            Add Hobby
+          </button>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 15px">
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
